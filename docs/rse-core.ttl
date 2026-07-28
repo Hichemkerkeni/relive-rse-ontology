@@ -1,0 +1,184 @@
+@prefix rse: <https://w3id.org/relive/rse/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://w3id.org/relive/rse/core>
+    a owl:Ontology ;
+    dcterms:title "Relive System Engine Core Ontology"@en ;
+    dcterms:title "Ontologie coeur du Relive System Engine"@fr ;
+    dcterms:description "Metamodel v0.1 for representing systems, observations, decisions, evidence and change."@en ;
+    owl:versionInfo "0.1.0" ;
+    dcterms:created "2026-07-28"^^xsd:date ;
+    dcterms:creator "Relive Group" ;
+    rse:maturityStatus rse:DraftStatus .
+
+### Annotation properties
+rse:definition a owl:AnnotationProperty .
+rse:assumption a owl:AnnotationProperty .
+rse:designRationale a owl:AnnotationProperty .
+rse:maturityStatus a owl:AnnotationProperty .
+rse:sourceReference a owl:AnnotationProperty .
+
+### Controlled individuals
+rse:DraftStatus a rse:LifecycleStatus ; rdfs:label "Draft"@en, "Brouillon"@fr .
+rse:ValidatedStatus a rse:LifecycleStatus ; rdfs:label "Validated"@en, "Valide"@fr .
+rse:DeprecatedStatus a rse:LifecycleStatus ; rdfs:label "Deprecated"@en, "Obsolete"@fr .
+
+### Root classes
+rse:Entity a owl:Class ; rdfs:label "Entity"@en, "Entite"@fr ;
+    rse:definition "Anything represented in the RSE model."@en .
+
+rse:System a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "System"@en, "Systeme"@fr ;
+    rse:definition "A bounded set of interacting elements whose organization produces functions or behaviors."@en .
+
+rse:Boundary a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Boundary"@en, "Frontiere"@fr .
+rse:Environment a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Environment"@en, "Environnement"@fr .
+rse:Component a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Component"@en, "Composant"@fr .
+rse:Interface a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Interface"@en, "Interface"@fr .
+rse:Process a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Process"@en, "Processus"@fr .
+rse:Phenomenon a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Phenomenon"@en, "Phenomene"@fr .
+rse:State a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "State"@en, "Etat"@fr .
+rse:Transition a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Transition"@en, "Transition"@fr .
+rse:Event a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Event"@en, "Evenement"@fr .
+rse:Flow a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Flow"@en, "Flux"@fr .
+rse:Resource a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Resource"@en, "Ressource"@fr .
+rse:Observation a owl:Class ; rdfs:subClassOf rse:Entity, sosa:Observation ; rdfs:label "Observation"@en, "Observation"@fr .
+rse:Variable a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Variable"@en, "Variable"@fr .
+rse:Objective a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Objective"@en, "Objectif"@fr .
+rse:Constraint a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Constraint"@en, "Contrainte"@fr .
+rse:Impact a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Impact"@en, "Impact"@fr .
+rse:Risk a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Risk"@en, "Risque"@fr .
+rse:Decision a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Decision"@en, "Decision"@fr .
+rse:DecisionOption a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Decision option"@en, "Option de decision"@fr .
+rse:Action a owl:Class ; rdfs:subClassOf rse:Entity, prov:Activity ; rdfs:label "Action"@en, "Action"@fr .
+rse:Actor a owl:Class ; rdfs:subClassOf rse:Entity, prov:Agent ; rdfs:label "Actor"@en, "Acteur"@fr .
+rse:Capability a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Capability"@en, "Capacite"@fr .
+rse:Model a owl:Class ; rdfs:subClassOf rse:Entity, prov:Entity ; rdfs:label "Model"@en, "Modele"@fr .
+rse:Evidence a owl:Class ; rdfs:subClassOf rse:Entity, prov:Entity ; rdfs:label "Evidence"@en, "Preuve"@fr .
+rse:Hypothesis a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "Hypothesis"@en, "Hypothese"@fr .
+rse:Experiment a owl:Class ; rdfs:subClassOf rse:Action ; rdfs:label "Experiment"@en, "Experience"@fr .
+rse:KPI a owl:Class ; rdfs:subClassOf rse:Entity ; rdfs:label "KPI"@en, "Indicateur"@fr .
+rse:RelationshipAssertion a owl:Class ; rdfs:subClassOf rse:Entity, prov:Entity ;
+    rdfs:label "Qualified relationship assertion"@en, "Assertion de relation qualifiee"@fr ;
+    rse:definition "A first-class representation of a relationship carrying provenance, confidence and validity conditions."@en .
+rse:LifecycleStatus a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Lifecycle status"@en .
+
+### System specializations
+rse:NaturalSystem a owl:Class ; rdfs:subClassOf rse:System ; rdfs:label "Natural system"@en, "Systeme naturel"@fr .
+rse:IndustrialSystem a owl:Class ; rdfs:subClassOf rse:System ; rdfs:label "Industrial system"@en, "Systeme industriel"@fr .
+rse:EnterpriseSystem a owl:Class ; rdfs:subClassOf rse:System ; rdfs:label "Enterprise system"@en, "Systeme d'entreprise"@fr .
+rse:BiologicalSystem a owl:Class ; rdfs:subClassOf rse:NaturalSystem ; rdfs:label "Biological system"@en .
+rse:SocialSystem a owl:Class ; rdfs:subClassOf rse:System ; rdfs:label "Social system"@en .
+rse:DigitalSystem a owl:Class ; rdfs:subClassOf rse:System ; rdfs:label "Digital system"@en .
+
+### Component specializations
+rse:PhysicalComponent a owl:Class ; rdfs:subClassOf rse:Component ; rdfs:label "Physical component"@en .
+rse:SoftwareComponent a owl:Class ; rdfs:subClassOf rse:Component ; rdfs:label "Software component"@en .
+rse:HumanComponent a owl:Class ; rdfs:subClassOf rse:Component ; rdfs:label "Human component"@en .
+rse:AIComponent a owl:Class ; rdfs:subClassOf rse:SoftwareComponent ; rdfs:label "AI component"@en .
+rse:OrganizationComponent a owl:Class ; rdfs:subClassOf rse:Component ; rdfs:label "Organization component"@en .
+rse:Sensor a owl:Class ; rdfs:subClassOf rse:PhysicalComponent, sosa:Sensor ; rdfs:label "Sensor"@en, "Capteur"@fr .
+
+### Flow specializations
+rse:MaterialFlow a owl:Class ; rdfs:subClassOf rse:Flow ; rdfs:label "Material flow"@en .
+rse:EnergyFlow a owl:Class ; rdfs:subClassOf rse:Flow ; rdfs:label "Energy flow"@en .
+rse:InformationFlow a owl:Class ; rdfs:subClassOf rse:Flow ; rdfs:label "Information flow"@en .
+rse:FinancialFlow a owl:Class ; rdfs:subClassOf rse:Flow ; rdfs:label "Financial flow"@en .
+
+### Observation specializations
+rse:SensorObservation a owl:Class ; rdfs:subClassOf rse:Observation ; rdfs:label "Sensor observation"@en .
+rse:HumanObservation a owl:Class ; rdfs:subClassOf rse:Observation ; rdfs:label "Human observation"@en .
+rse:SimulationObservation a owl:Class ; rdfs:subClassOf rse:Observation ; rdfs:label "Simulation observation"@en .
+rse:DerivedObservation a owl:Class ; rdfs:subClassOf rse:Observation ; rdfs:label "Derived observation"@en .
+
+### Actor specializations
+rse:HumanActor a owl:Class ; rdfs:subClassOf rse:Actor ; rdfs:label "Human actor"@en .
+rse:Organization a owl:Class ; rdfs:subClassOf rse:Actor ; rdfs:label "Organization"@en .
+rse:AIAgent a owl:Class ; rdfs:subClassOf rse:Actor, rse:AIComponent ; rdfs:label "AI agent"@en .
+rse:Role a owl:Class ; rdfs:subClassOf rse:Actor ; rdfs:label "Role"@en .
+
+### Object properties - structure
+rse:hasBoundary a owl:ObjectProperty ; rdfs:domain rse:System ; rdfs:range rse:Boundary ; rdfs:label "has boundary"@en .
+rse:contains a owl:ObjectProperty, owl:TransitiveProperty ; rdfs:domain rse:System ; rdfs:range rse:Entity ; owl:inverseOf rse:partOf ; rdfs:label "contains"@en .
+rse:partOf a owl:ObjectProperty, owl:TransitiveProperty ; rdfs:domain rse:Entity ; rdfs:range rse:System ; rdfs:label "part of"@en .
+rse:hasEnvironment a owl:ObjectProperty ; rdfs:domain rse:System ; rdfs:range rse:Environment .
+rse:hasInterface a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Interface .
+rse:connectedTo a owl:ObjectProperty, owl:SymmetricProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity .
+rse:interactsWith a owl:ObjectProperty, owl:SymmetricProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity .
+
+### Process and flow properties
+rse:hasInput a owl:ObjectProperty ; rdfs:domain rse:Process ; rdfs:range rse:Resource .
+rse:hasOutput a owl:ObjectProperty ; rdfs:domain rse:Process ; rdfs:range rse:Resource .
+rse:transforms a owl:ObjectProperty ; rdfs:domain rse:Process ; rdfs:range rse:Resource .
+rse:consumes a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Resource .
+rse:produces a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Resource .
+rse:exchangesFlow a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Flow .
+rse:exhibitsPhenomenon a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Phenomenon .
+
+### Dynamic properties
+rse:hasState a owl:ObjectProperty ; rdfs:domain rse:System ; rdfs:range rse:State .
+rse:sourceState a owl:ObjectProperty ; rdfs:domain rse:Transition ; rdfs:range rse:State .
+rse:targetState a owl:ObjectProperty ; rdfs:domain rse:Transition ; rdfs:range rse:State .
+rse:triggeredBy a owl:ObjectProperty ; rdfs:domain rse:Transition ; rdfs:range rse:Event .
+rse:affects a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity .
+rse:actsOn a owl:ObjectProperty ; rdfs:domain rse:Action ; rdfs:range rse:Entity .
+
+### Observation properties
+rse:observedBy a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Sensor ; owl:inverseOf rse:observes .
+rse:observes a owl:ObjectProperty ; rdfs:domain rse:Sensor ; rdfs:range rse:Entity .
+rse:madeByObserver a owl:ObjectProperty ; rdfs:domain rse:Observation ; rdfs:range rse:Actor .
+rse:hasObservedProperty a owl:ObjectProperty ; rdfs:domain rse:Observation ; rdfs:range rse:Variable .
+rse:hasUnit a owl:ObjectProperty ; rdfs:domain rse:Observation ; rdfs:range qudt:Unit .
+rse:aboutEntity a owl:ObjectProperty ; rdfs:domain rse:Observation ; rdfs:range rse:Entity .
+
+### Objectives, constraints, impacts and decisions
+rse:hasObjective a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Objective .
+rse:constrainedBy a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Constraint .
+rse:createsImpact a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Impact .
+rse:hasRisk a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Risk .
+rse:mitigatesRisk a owl:ObjectProperty ; rdfs:domain rse:Action ; rdfs:range rse:Risk .
+rse:hasDecisionOption a owl:ObjectProperty ; rdfs:domain rse:Decision ; rdfs:range rse:DecisionOption .
+rse:selectsOption a owl:ObjectProperty ; rdfs:domain rse:Decision ; rdfs:range rse:DecisionOption .
+rse:implements a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity .
+rse:evaluates a owl:ObjectProperty ; rdfs:domain rse:KPI ; rdfs:range rse:Entity .
+rse:hasKPI a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:KPI .
+
+### Causal and epistemic properties
+rse:causes a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity .
+rse:influences a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity .
+rse:dependsOn a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity .
+rse:supportedByEvidence a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Evidence .
+rse:derivedFrom a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Entity ; rdfs:subPropertyOf prov:wasDerivedFrom .
+rse:representedBy a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Model .
+rse:testsHypothesis a owl:ObjectProperty ; rdfs:domain rse:Experiment ; rdfs:range rse:Hypothesis .
+rse:producesObservation a owl:ObjectProperty ; rdfs:domain rse:Experiment ; rdfs:range rse:Observation .
+
+### Governance properties
+rse:responsibleFor a owl:ObjectProperty ; rdfs:domain rse:Actor ; rdfs:range rse:Entity .
+rse:hasResponsibleActor a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:Actor ; owl:inverseOf rse:responsibleFor .
+rse:owns a owl:ObjectProperty ; rdfs:domain rse:Actor ; rdfs:range rse:Entity .
+rse:authorizes a owl:ObjectProperty ; rdfs:domain rse:Actor ; rdfs:range rse:Action .
+rse:controls a owl:ObjectProperty ; rdfs:domain rse:Actor ; rdfs:range rse:Entity .
+
+### Qualified relationship properties
+rse:assertionSubject a owl:ObjectProperty ; rdfs:domain rse:RelationshipAssertion ; rdfs:range rse:Entity .
+rse:assertionPredicate a owl:ObjectProperty ; rdfs:domain rse:RelationshipAssertion ; rdfs:range rdf:Property .
+rse:assertionObject a owl:ObjectProperty ; rdfs:domain rse:RelationshipAssertion ; rdfs:range rse:Entity .
+rse:hasValidityCondition a owl:ObjectProperty ; rdfs:domain rse:RelationshipAssertion ; rdfs:range rse:Constraint .
+
+### Datatype properties
+rse:hasVersion a owl:DatatypeProperty ; rdfs:domain rse:Entity ; rdfs:range xsd:string .
+rse:hasTimestamp a owl:DatatypeProperty ; rdfs:domain rse:Entity ; rdfs:range xsd:dateTime .
+rse:hasNumericValue a owl:DatatypeProperty ; rdfs:domain rse:Entity ; rdfs:range xsd:decimal .
+rse:hasTextValue a owl:DatatypeProperty ; rdfs:domain rse:Entity ; rdfs:range xsd:string .
+rse:hasConfidence a owl:DatatypeProperty ; rdfs:domain rse:Entity ; rdfs:range xsd:decimal .
+rse:validFrom a owl:DatatypeProperty ; rdfs:domain rse:Entity ; rdfs:range xsd:dateTime .
+rse:validTo a owl:DatatypeProperty ; rdfs:domain rse:Entity ; rdfs:range xsd:dateTime .
+rse:hasStatus a owl:ObjectProperty ; rdfs:domain rse:Entity ; rdfs:range rse:LifecycleStatus .
